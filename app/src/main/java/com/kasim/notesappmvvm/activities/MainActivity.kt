@@ -1,7 +1,8 @@
-package com.kasim.notesappmvvm
+package com.kasim.notesappmvvm.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.kasim.notesappmvvm.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
