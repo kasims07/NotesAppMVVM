@@ -1,7 +1,9 @@
 package com.kasim.notesappmvvm.db
 
+import android.content.Context
 import android.icu.util.VersionInfo
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kasim.notesappmvvm.model.Note
 
@@ -13,4 +15,25 @@ import com.kasim.notesappmvvm.model.Note
 )
 
 abstract class NoteDatabase: RoomDatabase() {
+    abstract fun getNoteDao(): DAO
+
+    companion object{
+
+        @Volatile
+        private var instance : NoteDatabase ?=  null
+        private val LOCK = Any()
+
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK){
+            instance ?: createDatabase(context).also {
+                instance = it
+            }
+        }
+
+        private fun createDatabase(context:Context) = Room.databaseBuilder(
+            context.applicationContext,
+            NoteDatabase::class.java,
+            "note_database"
+        ).build()
+
+    }
 }
